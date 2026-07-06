@@ -668,12 +668,10 @@
     "type": "lxc",
     "type_id": "nm9bra8mzye2scg",
     "categories": [
-      "scriptcat00000",
-      "scriptcat00004"
+      "scriptcat00018"
     ],
     "category_names": [
-      "Miscellaneous",
-      "Network & Firewall"
+      "MQTT & Messaging"
     ],
     "notes": [
       "To see config: `cat /opt/cinny/config.json`"
@@ -1861,6 +1859,40 @@
       "pve"
     ],
     "config_path": "/opt/bazarr/data/config/config.yaml",
+    "os": "debian"
+  },
+  {
+    "name": "BeaverHabits",
+    "slug": "beaverhabits",
+    "desc": "BeaverHabits is a self-hosted habit tracking app without goals. Track streaks, view heatmaps, and manage your daily habits through a clean web interface powered by NiceGUI and Python.",
+    "script": "ct/beaverhabits.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/beaverhabits.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/beaverhabits.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00000"
+    ],
+    "category_names": [
+      "Miscellaneous"
+    ],
+    "notes": [
+      "Habit data is stored in /opt/beaverhabits/.user.",
+      "Set TRUSTED_LOCAL_EMAIL in the service environment to skip authentication for a specific email."
+    ],
+    "warnings": [],
+    "port": 8080,
+    "website": "https://beaverhabits.com",
+    "documentation": "https://github.com/daya0576/beaverhabits/wiki",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/beaverhabits.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": true,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
     "os": "debian"
   },
   {
@@ -9455,6 +9487,44 @@
     "os": "debian"
   },
   {
+    "name": "LeafWiki",
+    "slug": "leafwiki",
+    "desc": "LeafWiki is a self-hosted wiki built as a single Go binary with SQLite and Markdown stored on disk. No Node.js, no Redis, no Postgres — just a binary and a data directory.",
+    "script": "ct/leafwiki.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/leafwiki.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/leafwiki.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00012"
+    ],
+    "category_names": [
+      "Documents & Notes"
+    ],
+    "notes": [
+      "Admin password is stored in /etc/leafwiki/.env.",
+      "Wiki data and Markdown files are stored in /opt/leafwiki/data."
+    ],
+    "warnings": [],
+    "port": 8080,
+    "website": "https://leafwiki.com",
+    "documentation": "https://github.com/perber/leafwiki",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/leafwiki.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": true,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "admin",
+      "password": "auto-generated"
+    },
+    "os": "debian"
+  },
+  {
     "name": "Leantime",
     "slug": "leantime",
     "desc": "Leantime is a goals focused project management system for non-project managers. Building with ADHD, Autism, and dyslexia in mind. ",
@@ -12329,6 +12399,45 @@
       "pve"
     ],
     "config_path": "",
+    "os": "debian"
+  },
+  {
+    "name": "NoteDiscovery",
+    "slug": "notediscovery",
+    "desc": "NoteDiscovery is a lightweight, self-hosted knowledge base and note-taking platform. Write Markdown notes, build a graph of linked knowledge, and search full-text across your entire vault — all stored as plain files.",
+    "script": "ct/notediscovery.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/notediscovery.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/notediscovery.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00012"
+    ],
+    "category_names": [
+      "Documents & Notes"
+    ],
+    "notes": [
+      "Notes are stored as plain Markdown files in /opt/notediscovery/data."
+    ],
+    "warnings": [
+      "Authentication is disabled by default. Enable it in /opt/notediscovery/config.yaml and change the default password."
+    ],
+    "port": 8000,
+    "website": "https://www.notediscovery.com",
+    "documentation": "https://github.com/gamosoft/NoteDiscovery/tree/main/documentation",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/notediscovery.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": true,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "",
+      "password": "admin"
+    },
     "os": "debian"
   },
   {
@@ -18092,6 +18201,46 @@
       "pve"
     ],
     "config_path": "/etc/swizzin/",
+    "os": "debian"
+  },
+  {
+    "name": "Sync-in",
+    "slug": "sync-in",
+    "desc": "Sync-in is a self-hosted platform for file storage, synchronization, and team collaboration. Features include drag-and-drop uploads, OIDC/LDAP authentication, WebDAV support, full-text search, and online document editing with OnlyOffice or Collabora.",
+    "script": "ct/sync-in.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/sync-in.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/sync-in.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00011"
+    ],
+    "category_names": [
+      "Files & Downloads"
+    ],
+    "notes": [
+      "Configuration and generated secrets are stored in /opt/sync-in/environment.yaml.",
+      "Files are stored in /opt/sync-in/data. Increase disk size accordingly."
+    ],
+    "warnings": [
+      "Change the default credentials (sync-in / sync-in) immediately after first login."
+    ],
+    "port": 8080,
+    "website": "https://sync-in.com",
+    "documentation": "https://sync-in.com/docs",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/sync-in.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": true,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "sync-in",
+      "password": "sync-in"
+    },
     "os": "debian"
   },
   {
