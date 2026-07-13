@@ -360,6 +360,7 @@
       "Documents & Notes"
     ],
     "notes": [
+      "Admin Login under http://$IP:3010/admin/, credentials can be found with cat /root/affine.creds",
       "Initial build takes 20-30 minutes due to native module compilation."
     ],
     "warnings": [
@@ -8934,7 +8935,7 @@
     ],
     "port": 443,
     "website": "https://www.kasmweb.com/",
-    "documentation": "https://www.kasmweb.com/docs/",
+    "documentation": "https://docs.kasm.com/docs",
     "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/kasm-workspaces.webp",
     "updateable": true,
     "privileged": true,
