@@ -16,7 +16,8 @@
     ],
     "notes": [
       "Database credentials: `cat ~/2FAuth.creds`",
-      "The very first account created is automatically set up as an administrator account."
+      "The very first account created is automatically set up as an administrator account.",
+      "Users should register with http://<LXC_IP>/register"
     ],
     "warnings": [],
     "port": 80,
