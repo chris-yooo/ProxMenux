@@ -7956,10 +7956,11 @@
       "Documents & Notes"
     ],
     "notes": [
-      "This is the SYNC SERVER only, not the Hammer editor and it has no web interface. Install the Hammer client (desktop/mobile) separately, create a server account from the client, and point it at http://<IP>:8080.",
-      "The server is served over plain HTTP on port 8080. For access over the internet, put it behind a reverse proxy with TLS. Optional settings (public URL, TLS, external PostgreSQL) can be configured via a config.toml - see the upstream HOW-TO-RUN-A-SERVER documentation."
+      "This is the SYNC SERVER only, not the Hammer editor. Install the Hammer client (desktop/mobile) separately and create your account from there - the first account created becomes the admin account. http://<IP>:8080 serves the public web pages (/setup, /admin); /api is the sync endpoint and returns an error in a browser because it requires the client's protocol-version header.",
+      "Settings live in /opt/hammer_data/config.toml, which the server auto-loads from its data directory. It ships pre-filled with the container IP plus commented examples for reverse proxy, TLS, external PostgreSQL and caching. Apply changes with 'systemctl restart hammer'."
     ],
     "warnings": [
+      "Hammer clients only speak https and will NOT connect to plain HTTP, so the default http://<IP>:8080 works in a browser but not from the app. Put a TLS reverse proxy in front of it, or give Hammer a real certificate via sslPort/[sslCert] in /opt/hammer_data/config.toml. Self-signed certificates are rejected by the clients.",
       "Sync data is stored in an embedded PostgreSQL under /opt/hammer_data (kept outside the app directory so it survives updates). Include /opt/hammer_data in regular backups."
     ],
     "port": 8080,
@@ -17692,7 +17693,7 @@
     ],
     "warnings": [],
     "port": 80,
-    "website": "https://count.racku.la",
+    "website": "https://www.racku.la/",
     "documentation": "https://github.com/RackulaLives/Rackula",
     "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/rackula.webp",
     "updateable": true,
