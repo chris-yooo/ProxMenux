@@ -5,9 +5,13 @@ on:
   workflow_dispatch:
 
   # Automatic run every 6 hours
+  #schedule:
+  #  - cron: "0 */6 * * *"
+  
+  # Automatic run every Sunday
   schedule:
-    - cron: "0 */6 * * *"
-
+    - cron: "0 0 * * 0"
+    
 jobs:
   update-cache:
     runs-on: ubuntu-latest
