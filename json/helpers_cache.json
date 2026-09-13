@@ -532,6 +532,7 @@
       "Gaming & Leisure"
     ],
     "notes": [
+      "The script asks which Debian release AllStarLink runs on (13 Trixie or 12 Bookworm) and pulls the matching asl-apt-repos package. Upstream ships asl3 3.18.2 for both.",
       "Cloud-Init is enabled by default. Configure your SSH key and credentials in the Proxmox Cloud-Init tab before starting the VM.",
       "If you use Cloud-init, checkout cloud-init discussion: `https://github.com/community-scripts/ProxmoxVE/discussions/272`"
     ],
@@ -539,7 +540,7 @@
     "port": 0,
     "website": "https://allstarlink.org/",
     "documentation": "https://allstarlink.github.io/",
-    "logo": "",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/allstar-link.webp",
     "updateable": false,
     "privileged": false,
     "has_arm": false,
@@ -551,12 +552,12 @@
     "os": ""
   },
   {
-    "name": "AlmaLinux 10",
-    "slug": "almalinux-10-vm",
-    "desc": "AlmaLinux 10 (Heliotrope Lion) is a community-driven, RHEL-compatible enterprise Linux distribution. It provides a stable, production-ready platform with long-term support, making it ideal for servers, workloads, and cloud deployments.",
-    "script": "vm/almalinux-10-vm.sh",
-    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/vm/almalinux-10-vm.sh",
-    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/vm/almalinux-10-vm.sh",
+    "name": "AlmaLinux",
+    "slug": "almalinux-vm",
+    "desc": "AlmaLinux as a cloud image, with a choice of release at start: 10, 9 or 8. A community-owned RHEL-compatible distribution.",
+    "script": "vm/almalinux-vm.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/vm/almalinux-vm.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/vm/almalinux-vm.sh",
     "type": "vm",
     "type_id": "lte524abgx960bd",
     "categories": [
@@ -566,6 +567,7 @@
       "Operating Systems & Appliances"
     ],
     "notes": [
+      "The script asks which AlmaLinux release to install (10, 9 or 8). AlmaLinux 10 requires an x86-64-v3 capable host CPU; 9 and 8 run on older hardware.",
       "Cloud-Init is enabled by default. Configure your SSH key and credentials in the Proxmox Cloud-Init tab before starting the VM.",
       "If you use Cloud-init, checkout cloud-init discussion: `https://github.com/community-scripts/ProxmoxVE/discussions/272`"
     ],
@@ -3029,7 +3031,8 @@
       "Communication & Community"
     ],
     "notes": [
-      "Create the first account with `cd /opt/chatto && ./chatto operator user create --login admin` (the operator API is enabled by default), or register via the web UI at http://IP:4000.",
+      "Create the first account with `cd /opt/chatto && ./chatto operator user create --login <yourname>` (the operator API is enabled by default), or register via the web UI at http://IP:4000. Pick your own login: root, admin, superuser, op, operator and support are blocked by default and fail with 'this username is not available'.",
+      "Uploads go through the embedded NATS/JetStream store, which gets slow with many or large files. Testers report it becomes noticeably more usable with more CPU cores assigned to the container.",
       "Voice and video calls require a separately deployed LiveKit server; configure the [livekit] section in chatto.toml to enable them."
     ],
     "warnings": [
@@ -3080,7 +3083,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -3183,7 +3186,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -4479,9 +4482,9 @@
     "os": ""
   },
   {
-    "name": "Debian 12",
+    "name": "Debian",
     "slug": "debian-vm",
-    "desc": "Debian 12 (Bookworm) as a cloud image. The long-standing default base for servers that value stability over recency.",
+    "desc": "Debian as a cloud image, with a choice of release at start: 13 (Trixie), 12 (Bookworm) or 11 (Bullseye). The long-standing default base for servers that value stability over recency.",
     "script": "vm/debian-vm.sh",
     "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/vm/debian-vm.sh",
     "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/vm/debian-vm.sh",
@@ -4494,7 +4497,8 @@
       "Operating Systems & Appliances"
     ],
     "notes": [
-      "Cloud-Init is enabled by default. Configure your SSH key and credentials in the Proxmox Cloud-Init tab before starting the VM.",
+      "The script asks which Debian release to install (13, 12 or 11). It replaces the former separate debian-13-vm script.",
+      "Cloud-Init is optional and off by default. Choosing it switches the image from nocloud to genericcloud; configure your SSH key and credentials in the Proxmox Cloud-Init tab before starting the VM.",
       "If you use Cloud-init, checkout cloud-init discussion: `https://github.com/community-scripts/ProxmoxVE/discussions/272`"
     ],
     "warnings": [],
@@ -4572,7 +4576,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": true,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -5623,7 +5627,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": true,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -7865,6 +7869,42 @@
     "os": "debian"
   },
   {
+    "name": "Gotenberg",
+    "slug": "gotenberg",
+    "desc": "Gotenberg is a developer-friendly API for converting numerous document formats (HTML, Markdown, URLs and LibreOffice-supported office documents such as DOCX, XLSX, PPTX and ODF) into PDF. It also merges, splits, flattens and manipulates PDFs using Chromium, LibreOffice, QPDF, pdfcpu, PDFtk and ExifTool. This script builds Gotenberg from source and runs it bare-metal instead of via Docker.",
+    "script": "ct/gotenberg.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/gotenberg.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/gotenberg.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00012"
+    ],
+    "category_names": [
+      "Documents & Notes"
+    ],
+    "notes": [
+      "Gotenberg is a stateless conversion API - it has no web interface. Verify it is running with: curl http://<container-ip>:3000/health",
+      "Compiled from source on install (no prebuilt bare-metal binary exists) and bundles Chromium + LibreOffice, so the first install takes a while and pulls in sizeable dependencies. The first conversion after a (re)start is slower while Chromium/LibreOffice warm up."
+    ],
+    "warnings": [
+      "The API listens on port 3000 with no authentication. Keep it on a private/internal network or place a reverse proxy with auth in front of it."
+    ],
+    "port": 3000,
+    "website": "https://gotenberg.dev/",
+    "documentation": "https://gotenberg.dev/docs/getting-started/introduction",
+    "logo": "https://gotenberg.dev/img/logo.png",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": false,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
     "name": "Gotify",
     "slug": "gotify",
     "desc": "Gotify is a simple server for sending and receiving messages",
@@ -8176,6 +8216,39 @@
     "os": "debian"
   },
   {
+    "name": "PVE Guest Deletion",
+    "slug": "guest-delete",
+    "desc": "<p>This script helps manage and delete LXC containers or VM's on a Proxmox VE server. It lists all available containers/virtual machines, allowing the user to select one or more for deletion through an interactive menu. Running containers/vm's are automatically stopped before deletion, and the user is asked to confirm each action. The script ensures a controlled and efficient management process.</p>",
+    "script": "tools/pve/guest-delete.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/guest-delete.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/tools/pve/guest-delete.sh",
+    "type": "pve",
+    "type_id": "1uyjfno0fpf5buh",
+    "categories": [
+      "scriptcat00001"
+    ],
+    "category_names": [
+      "Host Management"
+    ],
+    "notes": [
+      "Execute within the Proxmox shell"
+    ],
+    "warnings": [],
+    "port": 0,
+    "website": "",
+    "documentation": "",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox-helper-scripts.webp",
+    "updateable": false,
+    "privileged": false,
+    "has_arm": true,
+    "is_dev": false,
+    "execute_in": [
+      "pve"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
     "name": "GWN Manager",
     "slug": "gwn-manager",
     "desc": "GWN Manager is a free on-premise enterprise-grade, management platform for Grandstream GWN series devices. Typically deployed on a customer’s private network, this flexible, scalable solution offers simplified configuration and management.",
@@ -8238,7 +8311,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": true,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -9967,7 +10040,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": true,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -10877,7 +10950,7 @@
       "Models download on demand — increase disk size if you plan to run large models."
     ],
     "warnings": [
-      "Remote access is configured with `host=0.0.0.0`. Set `LEMONADE_API_KEY` via a systemd override at `/etc/systemd/system/lemond.service.d/override.conf` before exposing the service."
+      "Remote access is configured with `host=0.0.0.0`, which also exposes the internal control endpoints (`/internal/*`, including shutdown and config). Secure it before use: run `systemctl edit lemond.service`, add `[Service]` followed by `Environment=\"LEMONADE_API_KEY=<random>\"`, then `systemctl restart lemond`. `LEMONADE_API_KEY` protects every endpoint; `LEMONADE_ADMIN_API_KEY` alone only protects `/internal/*` and leaves `/api`, `/v0` and `/v1` open."
     ],
     "port": 13305,
     "website": "https://lemonade-server.ai/",
@@ -10886,7 +10959,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -11121,7 +11194,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": true,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -11505,7 +11578,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -11676,39 +11749,6 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": false,
-    "execute_in": [
-      "pve"
-    ],
-    "config_path": "",
-    "os": "debian"
-  },
-  {
-    "name": "PVE LXC Deletion",
-    "slug": "lxc-delete",
-    "desc": "This script helps manage and delete LXC containers on a Proxmox VE server. It lists all available containers, allowing the user to select one or more for deletion through an interactive menu. Running containers are automatically stopped before deletion, and the user is asked to confirm each action. The script ensures a controlled and efficient container management process.",
-    "script": "tools/pve/lxc-delete.sh",
-    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/lxc-delete.sh",
-    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/tools/pve/lxc-delete.sh",
-    "type": "pve",
-    "type_id": "1uyjfno0fpf5buh",
-    "categories": [
-      "scriptcat00001"
-    ],
-    "category_names": [
-      "Host Management"
-    ],
-    "notes": [
-      "Execute within the Proxmox shell"
-    ],
-    "warnings": [],
-    "port": 0,
-    "website": "",
-    "documentation": "",
-    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox-helper-scripts.webp",
-    "updateable": false,
-    "privileged": false,
-    "has_arm": true,
     "is_dev": false,
     "execute_in": [
       "pve"
@@ -12190,7 +12230,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": true,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -14921,7 +14961,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -17077,7 +17117,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -19287,7 +19327,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -20850,7 +20890,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": true,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -21861,7 +21901,8 @@
       "Remote Access & VPN"
     ],
     "notes": [
-      "Guacamole (guacd) is running at 127.0.0.1:4822. If RDP/VNC connections fail, verify the Guacamole URL in Termix Admin Settings is set to 127.0.0.1:4822."
+      "Guacamole (guacd) is running at 127.0.0.1:4822. If RDP/VNC connections fail, verify the Guacamole URL in Termix Admin Settings is set to 127.0.0.1:4822.",
+      "You can install the specific one certbot you prefer. Important: This script does not install Certbot, as some require additional, external system dependencies (like specific packages for certain DNS providers). These external dependencies must be manually installed within the LXC container before you can successfully install and use the corresponding Certbot plugin. Consult the plugin's documentation for required packages."
     ],
     "warnings": [],
     "port": 80,
@@ -23090,7 +23131,7 @@
   {
     "name": "Umbrel OS",
     "slug": "umbrel-os-vm",
-    "desc": "Umbrel OS is a personal server operating system with an app store for self-hosted software. This installs the official image as a VM.",
+    "desc": "Umbrel OS is a personal server operating system with an app store for self-hosted software. This creates a VM that boots the official umbrelOS installer ISO.",
     "script": "vm/umbrel-os-vm.sh",
     "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/vm/umbrel-os-vm.sh",
     "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/vm/umbrel-os-vm.sh",
@@ -23109,11 +23150,11 @@
     "port": 80,
     "website": "https://umbrel.com/",
     "documentation": "https://umbrel.com/umbrelos",
-    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/umbrelos.webp",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/umbrel.webp",
     "updateable": false,
     "privileged": false,
     "has_arm": false,
-    "is_dev": false,
+    "is_dev": true,
     "execute_in": [
       "vm"
     ],
@@ -23554,6 +23595,44 @@
     "is_dev": false,
     "execute_in": [
       "pve"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
+    "name": "Valhalla",
+    "slug": "valhalla",
+    "desc": "Valhalla is an open-source routing engine and accompanying libraries for use with OpenStreetMap data. It provides turn-by-turn routing, map matching (snapping noisy GPS traces to the road/path network), time+distance matrices, isochrones and elevation lookups over a self-built tile graph. Commonly run as a self-hosted routing backend so that location data never has to be sent to a third party.",
+    "script": "ct/valhalla.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/valhalla.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/valhalla.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00000"
+    ],
+    "category_names": [
+      "Miscellaneous"
+    ],
+    "notes": [
+      "Installed by compiling from source (no prebuilt package exists), which takes roughly 20-45+ minutes depending on CPU/RAM.",
+      "To use this as the map-matching backend for GeoPulse, set GEOPULSE_TIMELINE_MAP_MATCHING_ENABLED=true, GEOPULSE_TIMELINE_MAP_MATCHING_PROVIDER=valhalla and GEOPULSE_TIMELINE_MAP_MATCHING_VALHALLA_BASE_URL=http://<this-container-IP>:8002 on the GeoPulse backend."
+    ],
+    "warnings": [
+      "No routing tiles are built during install. Find your region's extract at https://download.geofabrik.de/ (browse to a continent, then country/region, and copy the .osm.pbf download link), then build the graph with: /opt/valhalla_data/build-tiles.sh <pbf-url>. Avoid planet-wide data unless the container is sized for it.",
+      "The HTTP API on port 8002 has no authentication - keep it on a private/internal network.",
+      "The default 24GB disk / 8192MB RAM only covers the build. Routing tiles need several times the compressed extract size in free disk, so resize the container before building tiles for large regions."
+    ],
+    "port": 8002,
+    "website": "https://valhalla.github.io/valhalla/",
+    "documentation": "https://valhalla.github.io/valhalla/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/valhalla.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
     ],
     "config_path": "",
     "os": "debian"
@@ -24370,7 +24449,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": true,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
