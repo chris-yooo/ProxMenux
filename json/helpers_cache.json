@@ -942,7 +942,7 @@
     "port": 8080,
     "website": "https://apps.ankiweb.net/",
     "documentation": "https://docs.ankiweb.net/sync-server.html",
-    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/anki-sync-server.webp",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/anki.webp",
     "updateable": true,
     "privileged": false,
     "has_arm": true,
@@ -1432,7 +1432,7 @@
     "port": 0,
     "website": "https://archlinux.org/",
     "documentation": "https://wiki.archlinux.org/",
-    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/archlinux.webp",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/arch-linux.webp",
     "updateable": false,
     "privileged": false,
     "has_arm": false,
@@ -1632,7 +1632,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -3380,11 +3380,10 @@
       "Network & Firewall"
     ],
     "notes": [
-      "To update the configuration edit `/etc/systemd/system/cloudflare-ddns.service`. After edit please restart with `systemctl restart cloudflare-ddns`"
+      "To setup the updater you must have a Cloudflare Account API Token with \"DNS Read\" and \"DNS Write\" permission on the domains you want to create or update. See also the Github documentation at `https://github.com/favonia/cloudflare-ddns?tab=readme-ov-file#-step-1-updating-the-compose-file` (only the expandable section).",
+      "To update the configuration, edit `/etc/cloudflare-ddns.env`. After editing, please restart with `systemctl restart cloudflare-ddns`. Check the logs with `journalctl -u cloudflare-ddns -f`"
     ],
-    "warnings": [
-      "To setup the updater you must have the Cloudflare Token and the domains, please read the Github documentation at `https://github.com/favonia/cloudflare-ddns?tab=readme-ov-file#-step-1-updating-the-compose-file` (only the expandable section)"
-    ],
+    "warnings": [],
     "port": 0,
     "website": "https://github.com/favonia/cloudflare-ddns",
     "documentation": "https://github.com/favonia/cloudflare-ddns/blob/main/README.markdown",
@@ -3397,6 +3396,10 @@
       "pve"
     ],
     "config_path": "",
+    "default_credentials": {
+      "username": "root",
+      "password": ""
+    },
     "os": "debian"
   },
   {
@@ -4467,7 +4470,9 @@
       "Cloud-Init is optional and off by default. Choosing it switches the image from nocloud to genericcloud; configure your SSH key and credentials in the Proxmox Cloud-Init tab before starting the VM.",
       "If you use Cloud-init, checkout cloud-init discussion: `https://github.com/community-scripts/ProxmoxVE/discussions/272`"
     ],
-    "warnings": [],
+    "warnings": [
+      "Debian and Ubuntu Cloud Images use a serial console by default. In the Proxmox WebUI, use xterm.js instead of noVNC to enable console access and copy-paste."
+    ],
     "port": 0,
     "website": "https://www.debian.org/",
     "documentation": "https://www.debian.org/doc/",
@@ -4964,10 +4969,10 @@
     "category_names": [
       "Containers & Docker"
     ],
-    "notes": [],
-    "warnings": [
-      "The update function may modify or recreate Portainer containers (portainer/portainer-ce), even if they were created manually."
+    "notes": [
+      "You can choose the add-on of your choice later; we offer many options, such as Arcane, Komodo, Dockhand, Dockge, Portainer..."
     ],
+    "warnings": [],
     "port": 0,
     "website": "https://www.docker.com/",
     "documentation": "",
@@ -4997,10 +5002,10 @@
     "category_names": [
       "Containers & Docker"
     ],
-    "notes": [],
-    "warnings": [
-      "The update function may modify or recreate Portainer containers (portainer/portainer-ce), even if they were created manually."
+    "notes": [
+      "You can choose the add-on of your choice later; we offer many options, such as Arcane, Komodo, Dockhand, Dockge, Portainer..."
     ],
+    "warnings": [],
     "port": 0,
     "website": "https://www.docker.com/",
     "documentation": "",
@@ -5108,7 +5113,7 @@
     "warnings": [],
     "port": 3000,
     "website": "https://dockhand.pro/",
-    "documentation": "",
+    "documentation": "https://dockhand.pro/manual/",
     "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/dockhand.webp",
     "updateable": true,
     "privileged": false,
@@ -11041,6 +11046,46 @@
       "lxc"
     ],
     "config_path": "",
+    "os": "debian"
+  },
+  {
+    "name": "LibreDB Studio",
+    "slug": "libredbstudio",
+    "desc": "LibreDB Studio is a browser-based SQL IDE you run on your own server. It connects to PostgreSQL, MySQL, SQLite, libSQL, DuckDB, Oracle, SQL Server, MongoDB, Redis, Couchbase, ClickHouse, Apache Druid, Elasticsearch, OpenSearch, Apache Trino and Apache Cassandra. Optional AI query assistance works with a local Ollama model, and read-only access is enforced by the database itself rather than by parsing SQL.",
+    "script": "ct/libredbstudio.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/libredbstudio.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/libredbstudio.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00008"
+    ],
+    "category_names": [
+      "Databases"
+    ],
+    "notes": [
+      "The admin password is generated during install and written to /etc/libredb-studio/env inside the container.",
+      "The AI panel is hidden unless a model is configured, and nothing leaves the container while it is unconfigured."
+    ],
+    "warnings": [
+      "The install sets AUTH_COOKIE_SECURE=false because the container is reached over plain HTTP. Remove that line when you put the app behind HTTPS."
+    ],
+    "port": 3000,
+    "website": "https://libredb.org/",
+    "documentation": "https://github.com/libredb/libredb-studio/blob/main/README.md",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/libredb-studio.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "admin@libredb.org",
+      "password": ""
+    },
     "os": "debian"
   },
   {
@@ -19461,7 +19506,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": true,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -21076,7 +21121,7 @@
     "port": 3128,
     "website": "https://www.squid-cache.org/",
     "documentation": "https://wiki.squid-cache.org/SquidFaq",
-    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/squid.webp",
+    "logo": "https://wiki.squid-cache.org/assets/images/squid-logo-lucky-1.gif",
     "updateable": true,
     "privileged": false,
     "has_arm": true,
@@ -21262,7 +21307,7 @@
     "port": 80,
     "website": "https://stoat.chat",
     "documentation": "https://github.com/stoatchat/self-hosted",
-    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/stoatchat.webp",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/stoat.webp",
     "updateable": true,
     "privileged": false,
     "has_arm": false,
@@ -23242,7 +23287,9 @@
       "Cloud-Init is enabled by default. Configure your SSH key and credentials in the Proxmox Cloud-Init tab before starting the VM.",
       "If you use Cloud-init, checkout cloud-init discussion: `https://github.com/community-scripts/ProxmoxVE/discussions/272`"
     ],
-    "warnings": [],
+    "warnings": [
+      "Debian and Ubuntu Cloud Images use a serial console by default. In the Proxmox WebUI, use xterm.js instead of noVNC to enable console access and copy-paste."
+    ],
     "port": 0,
     "website": "https://ubuntu.com/",
     "documentation": "https://help.ubuntu.com/",
@@ -23383,11 +23430,11 @@
     "port": 80,
     "website": "https://umbrel.com/",
     "documentation": "https://umbrel.com/umbrelos",
-    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/umbrel.webp",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/umbrelos.webp",
     "updateable": false,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "vm"
     ],
@@ -25119,12 +25166,12 @@
       "Media & Streaming"
     ],
     "notes": [
-      "Two services run here: your-spotify (API on 8080) and your-spotify-web (UI on 3000). Point the reverse proxy at both.",
-      "Listening history is stored in the local MongoDB database 'your_spotify'. Back that up rather than /opt."
+      "Two services run here: your-spotify (API on 8080) and your-spotify-web (UI on 3000). Point the reverse proxy at both."
     ],
     "warnings": [
       "Spotify only accepts https redirect URIs (loopback excepted), so the Spotify login cannot be completed on the container's plain IP - it fails with 'redirect_uri: Insecure'. A TLS reverse proxy with a real domain is required for normal use.",
-      "Create an app at https://developer.spotify.com/dashboard, put its client ID and secret into SPOTIFY_PUBLIC and SPOTIFY_SECRET in /opt/your-spotify.env, set API_ENDPOINT and CLIENT_ENDPOINT to your https URLs, and register <API_ENDPOINT>/oauth/spotify/callback in the dashboard. The API endpoint is baked into the built frontend; set both endpoints at install time, or change them in /opt/your-spotify.env and run 'update' inside the container, which re-applies them."
+      "Create an app at https://developer.spotify.com/dashboard, put its client ID and secret into SPOTIFY_PUBLIC and SPOTIFY_SECRET in /opt/your-spotify.env, set API_ENDPOINT and CLIENT_ENDPOINT to your https URLs, and register <API_ENDPOINT>/oauth/spotify/callback in the dashboard. The API endpoint is baked into the built frontend; set both endpoints at install time, or change them in /opt/your-spotify.env and run 'update' inside the container, which re-applies them.",
+      "Known issue in 1.20.0: the Settings page stays blank. Fixed upstream but not yet released - see `https://github.com/Yooooomi/your_spotify/issues/617`"
     ],
     "port": 3000,
     "website": "https://github.com/Yooooomi/your_spotify",
@@ -25133,7 +25180,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": true,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
