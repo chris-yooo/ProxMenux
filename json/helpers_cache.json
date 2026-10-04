@@ -946,7 +946,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": true,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -2389,6 +2389,37 @@
     "os": "debian"
   },
   {
+    "name": "Blocky",
+    "slug": "blocky",
+    "desc": "Blocky is a software tool designed for blocking unwanted ads and trackers on local networks. It functions as a DNS proxy and runs on the Go programming language. Blocky intercepts requests to advertisements and other unwanted content and blocks them before they reach the end user. This results in a cleaner, faster, and more secure online experience for users connected to the local network. Blocky is open-source, easy to configure and can be run on a variety of devices, making it a versatile solution for small to medium-sized local networks.",
+    "script": "ct/blocky.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/blocky.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/blocky.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00005"
+    ],
+    "category_names": [
+      "Adblock & DNS"
+    ],
+    "notes": [],
+    "warnings": [],
+    "port": 4000,
+    "website": "https://0xerr0r.github.io/blocky/",
+    "documentation": "https://0xerr0r.github.io/blocky/latest/configuration/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/blocky.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": true,
+    "is_dev": false,
+    "execute_in": [
+      "pve"
+    ],
+    "config_path": "",
+    "os": "alpine"
+  },
+  {
     "name": "BookLore",
     "slug": "booklore",
     "desc": "BookLore is a self-hosted digital library for managing and reading books, offering a beautiful interface and support for metadata management. Built with a modern tech stack, it provides support for importing, organizing, and reading EPUBs and PDFs, while also managing cover images and book metadata.",
@@ -2632,6 +2663,45 @@
     "is_dev": false,
     "execute_in": [
       "pve"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
+    "name": "ByteChef",
+    "slug": "bytechef",
+    "desc": "ByteChef is an open-source API integration and workflow automation platform. Workflows are built in a visual editor from 170+ connectors, flow controls such as conditions, loops and branches, and JavaScript, Python or Ruby code steps, and run manually, on a schedule or from webhooks. This script builds the server and web client from source and runs them with PostgreSQL.",
+    "script": "ct/bytechef.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/bytechef.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/bytechef.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00019"
+    ],
+    "category_names": [
+      "Automation & Scheduling"
+    ],
+    "notes": [
+      "Webhook triggers and OAuth2 connection redirects are built from BYTECHEF_PUBLIC_URL in /opt/bytechef_data/.env, which points at the container IP. Change it when the IP changes or ByteChef sits behind a reverse proxy or domain, then run systemctl restart bytechef.",
+      "ByteChef is open-core. Like the official image, this build runs the Enterprise Edition (BYTECHEF_EDITION=EE, the default; CE mode does not start in 0.34.x): the modules under the ByteChef Enterprise License (embedded iPaaS, API platform, AI gateway, SSO and SCIM, custom components, audit log) are free for development and testing, production use of them needs a subscription.",
+      "Install and every update compile ByteChef from source (Gradle, around 650 modules, plus the React client), which takes about 15 minutes on 4 cores and needs the 6 GB of RAM. The running server is fine with 2 GB, so the RAM can be lowered after the install and raised again before an update.",
+      "Code steps (JavaScript, Python, Ruby) run on the Temurin JDK in GraalVM's interpreter mode, not with the GraalVM JIT of the official image, so they work but run slower."
+    ],
+    "warnings": [
+      "There is no default account. Open http://<IP>:8080/login and click Create account: the first sign-up becomes the administrator and closes sign-up, further users are invited from the settings. Anyone who reaches the port can claim it until then, so create the account right after the install.",
+      "Back up BYTECHEF_ENCRYPTION_PROPERTY_KEY from /opt/bytechef_data/.env together with the database. It encrypts the stored connection credentials, so a database restored without it is useless for them."
+    ],
+    "port": 8080,
+    "website": "https://www.bytechef.io/",
+    "documentation": "https://docs.bytechef.io/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/bytechef.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
     ],
     "config_path": "",
     "os": "debian"
@@ -2949,6 +3019,43 @@
       "username": "admin@certimate.fun",
       "password": "1234567890"
     },
+    "os": "debian"
+  },
+  {
+    "name": "CertMate",
+    "slug": "certmate",
+    "desc": "CertMate is a self-hosted SSL/TLS certificate manager. It issues and renews certificates over ACME (Let's Encrypt, ZeroSSL or a private ACME CA) with DNS-01 across many DNS providers or HTTP-01, renews them on a schedule, and exposes a web UI and a REST API for issuing, downloading and deploying certificates, with encrypted backups and webhook notifications.",
+    "script": "ct/certmate.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/certmate.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/certmate.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00006"
+    ],
+    "category_names": [
+      "Authentication & Security"
+    ],
+    "notes": [
+      "CertMate listens on plain HTTP on port 8000 on every interface. To expose it beyond your LAN, put an HTTPS reverse proxy in front and set BEHIND_PROXY=true in /opt/certmate_data/.env, then run systemctl restart certmate.",
+      "Certificates, settings, backups and logs live in /opt/certmate_data and survive updates."
+    ],
+    "warnings": [
+      "There is no default login. The first page creates the administrator account and asks for the API token, which the install generated: grep API_BEARER_TOKEN /opt/certmate_data/.env",
+      "Keep a copy of /opt/certmate_data/.env off the container. CERTMATE_BACKUP_PASSPHRASE encrypts the backups, and SECRET_KEY must match for a backup to restore the API token."
+    ],
+    "port": 8000,
+    "website": "https://www.certmate.org",
+    "documentation": "https://github.com/fabriziosalmi/certmate/blob/main/docs/installation.md",
+    "logo": "https://cdn.jsdelivr.net/gh/fabriziosalmi/certmate@main/certmate_logo.png",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
     "os": "debian"
   },
   {
@@ -4555,6 +4662,44 @@
     "os": "debian"
   },
   {
+    "name": "Deemix",
+    "slug": "deemix",
+    "desc": "Deemix is a Deezer music downloader with a web interface. It searches the Deezer catalogue and downloads tracks, albums, playlists and artist discographies with tags and cover art, in MP3 or FLAC depending on the account. This is the maintained community fork by bambanah, which revived the discontinued original.",
+    "script": "ct/deemix.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/deemix.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/deemix.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00013"
+    ],
+    "category_names": [
+      "Media & Streaming"
+    ],
+    "notes": [
+      "Downloading requires the ARL cookie of your Deezer account. Log in at deezer.com in a browser, copy the value of the arl cookie from the developer tools (Application or Storage tab), then paste it in Deemix under Settings > Login > Log in with ARL. An ARL expires after about three months.",
+      "Music is saved to /opt/deemix_data/music. To store it on a NAS or media share, bind-mount that share onto the same path, e.g. pct set <CTID> -mp0 /mnt/media/music,mp=/opt/deemix_data/music. In an unprivileged container the host directory must be writable by UID 100000.",
+      "Settings, the saved ARL and logs live in /opt/deemix_data/config, outside the app directory, so updates keep them.",
+      "Deemix downloads through your own Deezer account. Whether that is allowed depends on Deezer's terms of use and the law where you live."
+    ],
+    "warnings": [
+      "Deemix has no login of its own, and the saved ARL is used for every visitor. Anyone who can reach port 6595 can download with your Deezer account, so keep it on a trusted network or behind an authenticating reverse proxy."
+    ],
+    "port": 6595,
+    "website": "https://github.com/bambanah/deemix",
+    "documentation": "https://github.com/bambanah/deemix#readme",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/deemix.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
     "name": "Defguard",
     "slug": "defguard",
     "desc": "Defguard is a WireGuard VPN server combined with an identity provider. It adds user enrollment, multi-factor authentication, OpenID Connect SSO and per-user access control on top of WireGuard, all managed from a web interface. This installs the Defguard Core service; gateways are deployed separately on the machines that terminate the VPN tunnels.",
@@ -5433,6 +5578,44 @@
     "os": "ubuntu"
   },
   {
+    "name": "Dragonfly",
+    "slug": "dragonfly",
+    "desc": "Dragonfly is an in-memory data store compatible with the Redis and Memcached APIs, so existing Redis clients, libraries and tools work against it unchanged. It is multi-threaded with a shared-nothing design that uses every core it is given, and it takes snapshots without forking, which keeps the memory overhead of a save low. This script installs the official package with a generated password and periodic snapshots.",
+    "script": "ct/dragonfly.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/dragonfly.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/dragonfly.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00008"
+    ],
+    "category_names": [
+      "Databases"
+    ],
+    "notes": [
+      "Once the memory limit is reached, writes fail with 'Out of memory' and nothing is evicted. To use Dragonfly as a cache that drops old keys instead, add --cache_mode=true to /etc/dragonfly/dragonfly.conf and run `systemctl restart dragonfly`.",
+      "Data is snapshotted to /var/lib/dragonfly every 30 minutes (--snapshot_cron) and on every clean stop, and loaded again at start. Back up that directory; updates leave it and the config in place.",
+      "Dragonfly is source-available under the Business Source License 1.1: free to self-host and to use in your own products, but not to offer as a hosted or managed in-memory data store service."
+    ],
+    "warnings": [
+      "Dragonfly listens on port 6379 on all interfaces and requires a password. It is generated at install and stored as --requirepass in /etc/dragonfly/dragonfly.conf. Connect with `redis-cli -h <IP> -a <password>`; redis-cli is also installed inside the container.",
+      "Dragonfly sets its memory limit at every start to 80% of the RAM free in the container and needs at least 256 MiB of that per CPU core, otherwise it refuses to start. Add RAM when you add cores (4 cores need more than 1.25 GB), or pin a limit with --maxmemory=<size> in the config."
+    ],
+    "port": 6379,
+    "website": "https://www.dragonflydb.io/",
+    "documentation": "https://www.dragonflydb.io/docs",
+    "logo": "https://cdn.jsdelivr.net/gh/dragonflydb/dragonfly@main/.github/images/logo-full.svg",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
     "name": "DrawDB",
     "slug": "drawdb",
     "desc": "DrawDB is a free, simple, and intuitive database entity relationship (DBER) editor right in your browser. Build diagrams with a few clicks, export SQL scripts, and customize your editor.",
@@ -6195,6 +6378,44 @@
     "os": "debian"
   },
   {
+    "name": "FalkorDB",
+    "slug": "falkordb",
+    "desc": "FalkorDB is a low-latency property graph database built on sparse matrices and linear algebra (GraphBLAS), aimed at knowledge graphs and GraphRAG for LLM applications. It runs as a Redis module, is queried with OpenCypher through the GRAPH.* commands from any Redis client, and comes with FalkorDB Browser, a web UI for running queries and exploring graphs.",
+    "script": "ct/falkordb.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/falkordb.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/falkordb.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00008"
+    ],
+    "category_names": [
+      "Databases"
+    ],
+    "notes": [
+      "Try it from the container: redis-cli -a <password> GRAPH.QUERY social \"CREATE (:Person {name:'Alice'})-[:KNOWS]->(:Person {name:'Bob'})\", then redis-cli -a <password> GRAPH.QUERY social \"MATCH (a)-[:KNOWS]->(b) RETURN a.name, b.name\".",
+      "FalkorDB Browser runs on port 3000. Log in with host localhost, port 6379, an empty username and the requirepass password. If you reach it under another address (new IP, hostname, reverse proxy), set NEXTAUTH_URL in /opt/falkordb-browser_data/.env and restart falkordb-browser.",
+      "FalkorDB is loaded as a module into Redis 8 from packages.redis.io (service redis-server). Module arguments sit on the loadmodule line in /etc/redis/falkordb.conf; graph data (RDB and AOF) lives in /var/lib/redis, and LOAD CSV reads from /var/lib/FalkorDB/import.",
+      "The 4 GB RAM are for building FalkorDB Browser during install and browser updates (peak about 3.4 GB). At runtime FalkorDB and the browser use about 200 MB plus your graph data."
+    ],
+    "warnings": [
+      "The Redis password is generated at install and stored as requirepass in /etc/redis/falkordb.conf. FalkorDB itself listens on port 6379."
+    ],
+    "port": 3000,
+    "website": "https://www.falkordb.com/",
+    "documentation": "https://docs.falkordb.com/",
+    "logo": "https://cdn.jsdelivr.net/gh/FalkorDB/falkordb-browser@main/public/icons/F-light.svg",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
     "name": "Fedora",
     "slug": "fedora",
     "desc": "Fedora is a cutting-edge Linux distribution sponsored by Red Hat, featuring current open-source technologies.",
@@ -6581,6 +6802,44 @@
     "os": "debian"
   },
   {
+    "name": "Firefox Syncserver",
+    "slug": "firefox-syncserver",
+    "desc": "Firefox Syncserver (syncstorage-rs) is Mozilla's own Rust server behind Firefox Sync, combining the sync storage and the tokenserver in one binary. Self-hosted, it keeps your Firefox bookmarks, history, passwords, open tabs, add-ons and form data on your own infrastructure, while you still sign in with a regular Mozilla account. Firefox encrypts every record before upload, so the server never sees their contents.",
+    "script": "ct/firefox-syncserver.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/firefox-syncserver.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/firefox-syncserver.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00007"
+    ],
+    "category_names": [
+      "Backup & Recovery"
+    ],
+    "notes": [
+      "There is no web interface. In Firefox open about:config, set identity.sync.tokenserver.uri to http://<IP>:8000/1.0/sync/1.5, restart Firefox, then sign in to Sync. about:sync-log shows whether it talks to your server. Health check: http://<IP>:8000/__heartbeat__",
+      "Sign-in still goes through your Mozilla account at accounts.firefox.com. Only the sync data is stored on this server.",
+      "Firefox for Android: in Settings > About Firefox tap the logo repeatedly to unlock the debug menu, set the custom Sync server to the same /1.0/sync/1.5 URL and stop Firefox from that menu. Do this before signing in.",
+      "Install and every update compile the server from source with Rust. The 3 GB RAM is sized for that build; the running server itself uses under 100 MB."
+    ],
+    "warnings": [
+      "Firefox syncs to the storage URL this server hands out, set by SYNC_TOKENSERVER__INIT_NODE_URL in /opt/firefox-syncserver_data/.env (default http://<IP>:8000). If you use HTTPS through a reverse proxy, or the container IP changes, set it to the public origin (e.g. https://sync.example.com) before the first sign-in and point identity.sync.tokenserver.uri at that origin. It is stored in the nodes table of the syncserver database on first start; changing it later only adds a second node, so also update the existing row."
+    ],
+    "port": 8000,
+    "website": "https://www.mozilla.org/firefox/features/sync/",
+    "documentation": "https://mozilla-services.github.io/syncstorage-rs/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/firefox.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
     "name": "fireshare",
     "slug": "fireshare",
     "desc": "Fireshare is a self-hosted app that lets you share videos — particularly gaming clips — via unique links. You upload videos to a folder, and the app generates shareable URLs for each one. It's designed as a lightweight alternative to services like Medal or YouTube for people who want full control over their content without relying on third-party platforms.",
@@ -6899,6 +7158,43 @@
     "privileged": false,
     "has_arm": true,
     "is_dev": false,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
+    "name": "Folding@home",
+    "slug": "foldingathome",
+    "desc": "Folding@home is a distributed computing project that simulates protein dynamics to help research diseases such as cancer, Alzheimer's and infectious diseases. This script installs the official v8.5 client, which runs headless and folds work units on the container's CPUs and on any passed-through GPU, managed remotely through the Folding@home Web Control.",
+    "script": "ct/foldingathome.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/foldingathome.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/foldingathome.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00000"
+    ],
+    "category_names": [
+      "Miscellaneous"
+    ],
+    "notes": [
+      "There is no local web interface. Manage the client from the Web Control at https://app.foldingathome.org/ once it is linked to your Folding@home account - the client's own port 7396 only listens on localhost.",
+      "A new client starts paused: press Fold in the Web Control. By default it leaves one of the container's cores free; the CPU count and which GPUs fold are set in the machine settings there.",
+      "GPU folding needs GPU passthrough, which the script enables when the host has a GPU. Supported NVIDIA, AMD and some Intel GPUs then appear in the machine settings, where each has to be enabled."
+    ],
+    "warnings": [
+      "Linking needs the account token from Account Settings in the Web Control. If you skipped it, set it in /etc/fah-client/config.xml as <account-token v=\"...\"/> and run systemctl restart fah-client. Generate a fresh token afterwards - only the newest token can add machines."
+    ],
+    "port": 0,
+    "website": "https://foldingathome.org/",
+    "documentation": "https://foldingathome.org/guides/v8-5",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/folding-home.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
     "execute_in": [
       "lxc"
     ],
@@ -7546,6 +7842,78 @@
     "os": "debian"
   },
   {
+    "name": "Gitea Runner",
+    "slug": "gitea-runner",
+    "desc": "Gitea Runner (act_runner) is the daemon that executes CI/CD jobs for Gitea Actions. It connects to your Gitea instance, polls for queued workflow runs, and executes tasks using either host execution or containerized engines.",
+    "script": "ct/gitea-runner.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/gitea-runner.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/gitea-runner.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00020"
+    ],
+    "category_names": [
+      "AI / Coding & Dev-Tools"
+    ],
+    "notes": [
+      "Supports both Debian 13 and Alpine 3.24. The installer prompts for the OS or accepts var_os=alpine / var_os=debian.",
+      "To register the runner, obtain a registration token in Gitea under Site Administration > Actions > Runners, then run: `gitea-runner -c /etc/gitea-runner/config.yaml register --instance <URL> --token <TOKEN>`.",
+      "After registering, start the runner daemon service with `systemctl start gitea-runner` (Debian) or `rc-service gitea-runner start` (Alpine).",
+      "Docker is installed and enabled by default for containerized workflow execution. Ensure nested virtualization is enabled on the LXC."
+    ],
+    "warnings": [],
+    "port": 0,
+    "website": "https://gitea.com/gitea/runner",
+    "documentation": "https://docs.gitea.com/runner/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/gitea.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
+    "name": "Gitea Runner",
+    "slug": "gitea-runner",
+    "desc": "Gitea Runner (act_runner) is the daemon that executes CI/CD jobs for Gitea Actions. It connects to your Gitea instance, polls for queued workflow runs, and executes tasks using either host execution or containerized engines.",
+    "script": "ct/gitea-runner.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/gitea-runner.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/gitea-runner.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00020"
+    ],
+    "category_names": [
+      "AI / Coding & Dev-Tools"
+    ],
+    "notes": [
+      "Supports both Debian 13 and Alpine 3.24. The installer prompts for the OS or accepts var_os=alpine / var_os=debian.",
+      "To register the runner, obtain a registration token in Gitea under Site Administration > Actions > Runners, then run: `gitea-runner -c /etc/gitea-runner/config.yaml register --instance <URL> --token <TOKEN>`.",
+      "After registering, start the runner daemon service with `systemctl start gitea-runner` (Debian) or `rc-service gitea-runner start` (Alpine).",
+      "Docker is installed and enabled by default for containerized workflow execution. Ensure nested virtualization is enabled on the LXC."
+    ],
+    "warnings": [],
+    "port": 0,
+    "website": "https://gitea.com/gitea/runner",
+    "documentation": "https://docs.gitea.com/runner/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/gitea.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "alpine"
+  },
+  {
     "name": "GitHub Runner",
     "slug": "github-runner",
     "desc": "GitHub Actions self-hosted runner executes workflows for your repository or organization, enabling CI/CD, builds, and deployments.",
@@ -7652,6 +8020,37 @@
     ],
     "config_path": "",
     "os": "debian"
+  },
+  {
+    "name": "Glance",
+    "slug": "glance",
+    "desc": "A self-hosted dashboard that puts all your feeds in one place",
+    "script": "ct/glance.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/glance.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/glance.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00010"
+    ],
+    "category_names": [
+      "Dashboards & Frontends"
+    ],
+    "notes": [],
+    "warnings": [],
+    "port": 8080,
+    "website": "https://github.com/glanceapp/glance",
+    "documentation": "https://github.com/glanceapp/glance/blob/main/docs/configuration.md",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/glance.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": true,
+    "is_dev": false,
+    "execute_in": [
+      "pve"
+    ],
+    "config_path": "",
+    "os": "alpine"
   },
   {
     "name": "Glances",
@@ -8383,7 +8782,7 @@
       "This VM boots an installer image. Open the console after creation and complete the installation there."
     ],
     "warnings": [],
-    "port": 8123,
+    "port": 80,
     "website": "https://www.home-assistant.io/",
     "documentation": "https://www.home-assistant.io/docs/",
     "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/home-assistant.webp",
@@ -8508,6 +8907,43 @@
       "username": "admin@community-scripts.org",
       "password": ""
     },
+    "os": "debian"
+  },
+  {
+    "name": "HedgeDoc",
+    "slug": "hedgedoc",
+    "desc": "HedgeDoc (formerly CodiMD) is a self-hosted, real-time collaborative Markdown editor. Several people can write the same note at once in the browser, with support for diagrams, math, slide presentations and per-note sharing permissions.",
+    "script": "ct/hedgedoc.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/hedgedoc.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/hedgedoc.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00012"
+    ],
+    "category_names": [
+      "Documents & Notes"
+    ],
+    "notes": [
+      "There is no default account. Use Sign In to register the first user with an email address and password. Guests can read notes but cannot create them.",
+      "Configuration, the session secret and uploaded images live in /opt/hedgedoc_data and survive updates. Notes are stored in the PostgreSQL database hedgedoc."
+    ],
+    "warnings": [
+      "Registration is open to anyone who can reach the instance. Once your accounts exist, set \"allowEmailRegister\": false in /opt/hedgedoc_data/config.json and run systemctl restart hedgedoc. Further users can then be added from the shell: cd /opt/hedgedoc && NODE_ENV=production CMD_CONFIG_FILE=/opt/hedgedoc_data/config.json bin/manage_users --add user@example.com",
+      "The domain in config.json must match the address in the browser, otherwise the page loads without scripts. It is set to the container IP with urlAddPort. Behind a reverse proxy set domain to your hostname, urlAddPort to false and protocolUseSSL to true for HTTPS, then restart hedgedoc."
+    ],
+    "port": 3000,
+    "website": "https://hedgedoc.org/",
+    "documentation": "https://docs.hedgedoc.org/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/hedgedoc.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
     "os": "debian"
   },
   {
@@ -10330,6 +10766,44 @@
     "os": "debian"
   },
   {
+    "name": "Keeper",
+    "slug": "keeper",
+    "desc": "Keeper is an open-source calendar syncing tool. It pulls events from iCal/ICS links, CalDAV, iCloud, Fastmail, Google Calendar and Outlook, and pushes them to one or many destination calendars, removing copies again when the source event is deleted. Self-hosted instances get every Pro feature.",
+    "script": "ct/keeper.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/keeper.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/keeper.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00019"
+    ],
+    "category_names": [
+      "Automation & Scheduling"
+    ],
+    "notes": [
+      "iCal/ICS links and CalDAV accounts (iCloud, Fastmail, Nextcloud, ...) work out of the box. Google Calendar and Outlook need your own OAuth app: put the credentials into GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET and MICROSOFT_CLIENT_ID/MICROSOFT_CLIENT_SECRET in /opt/keeper_data/.env, then run `systemctl restart keeper-api keeper-cron keeper-worker`.",
+      "Google and Microsoft only accept HTTPS redirect URIs on a real domain, so OAuth needs a reverse proxy in front of port 3000. Set BETTER_AUTH_URL and TRUSTED_ORIGINS in /opt/keeper_data/.env to that URL and register <BETTER_AUTH_URL>/api/auth/callback/google, /api/sources/callback/google, /api/auth/callback/microsoft and /api/sources/callback/outlook as redirect URIs.",
+      "Web UI (port 3000), API (3001), cron and worker run as keeper-web, keeper-api, keeper-cron and keeper-worker. Database, Redis, secrets and OAuth settings live outside /opt/keeper, which is rebuilt on every update."
+    ],
+    "warnings": [
+      "There is no default account: open the web UI and register one with a username and password. Registration stays open to anyone who can reach port 3000, so keep the container off the public internet or behind an authenticating proxy.",
+      "BETTER_AUTH_URL and TRUSTED_ORIGINS in /opt/keeper_data/.env are set to http://<container-ip>:3000 at install; auth requests from any other origin fail with \"Invalid origin\". When the IP changes or you add a domain, update them (TRUSTED_ORIGINS takes a comma-separated list) and run `systemctl restart keeper-api`."
+    ],
+    "port": 3000,
+    "website": "https://www.keeper.sh/",
+    "documentation": "https://github.com/ridafkih/keeper.sh#self-hosted",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/keeper.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": false,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
     "name": "PVE Kernel Clean",
     "slug": "kernel-clean",
     "desc": "Cleaning unused kernel images is beneficial for reducing the length of the GRUB menu and freeing up disk space. By removing old, unused kernels, the system is able to conserve disk space and streamline the boot process.",
@@ -11390,6 +11864,44 @@
     "os": "ubuntu"
   },
   {
+    "name": "Listenarr",
+    "slug": "listenarr",
+    "desc": "Listenarr automates audiobook collection management in the style of Sonarr and Radarr. It searches torrent and NZB indexers, hands grabs to your download client, and imports and organizes the finished audiobooks with metadata from Audible and other sources.",
+    "script": "ct/listenarr.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/listenarr.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/listenarr.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00014"
+    ],
+    "category_names": [
+      "*Arr Suite"
+    ],
+    "notes": [
+      "Only amd64 is supported: upstream ships no arm64 build.",
+      "Add a download client (qBittorrent, Transmission, SABnzbd or NZBGet) under Settings > Download Clients, then add Torznab/Newznab indexers under Settings > Indexers or import them from Prowlarr. If the download client runs in another container, mount its download folder here and set a remote path mapping.",
+      "Settings, database, logs and image cache live in /opt/listenarr_data/config. On first start Listenarr downloads its own ffprobe into that folder."
+    ],
+    "warnings": [
+      "Listenarr only publishes canary builds, all flagged as GitHub pre-releases. This script installs and updates from that channel, so expect breaking changes and keep backups of /opt/listenarr_data.",
+      "Authentication is disabled on first start. Turn on the login screen and create the admin account under Settings > General > Authentication, or keep the container on a trusted network."
+    ],
+    "port": 4545,
+    "website": "https://getlistenarr.com/",
+    "documentation": "https://getlistenarr.com/docs/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/listenarr.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
     "name": "listmonk",
     "slug": "listmonk",
     "desc": "High performance, self-hosted, newsletter and mailing list manager with a modern dashboard.",
@@ -12254,6 +12766,43 @@
       "username": "admin",
       "password": "auto-generated"
     },
+    "os": "debian"
+  },
+  {
+    "name": "Mathesar",
+    "slug": "mathesar",
+    "desc": "Mathesar is a spreadsheet-like web interface for PostgreSQL. Users of any technical skill level can view, edit, query and collaborate on Postgres data directly, build relationships between tables, import CSV files and create forms, while access is governed by native PostgreSQL roles and privileges.",
+    "script": "ct/mathesar.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/mathesar.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/mathesar.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00008"
+    ],
+    "category_names": [
+      "Databases"
+    ],
+    "notes": [
+      "On first visit Mathesar asks you to create the admin account. The two analytics checkboxes on that page (installation confirmation and anonymous usage data) are enabled by default; untick them if you do not want to share data.",
+      "The bundled PostgreSQL server holds Mathesar's internal database (mathesar_django), which cannot itself be used for your data. Use 'Create a new database' to store data in this container (the mathesar role may create databases), or 'Connect to an existing database' with the host, port and credentials of any other PostgreSQL 14+ server.",
+      "ALLOWED_HOSTS is * so the container IP works out of the box. Behind a reverse proxy, restrict it to your domain(s) and forward the Host and X-Forwarded-Proto headers."
+    ],
+    "warnings": [
+      "Settings live in /opt/mathesar_data/.env, including SECRET_KEY, which encrypts the saved database passwords: keep it and back it up with the PostgreSQL databases. Add variables from https://docs.mathesar.org/administration/environment-variables/ there, then run `systemctl restart mathesar`."
+    ],
+    "port": 8000,
+    "website": "https://mathesar.org/",
+    "documentation": "https://docs.mathesar.org/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/mathesar.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
     "os": "debian"
   },
   {
@@ -16887,6 +17436,47 @@
     "os": "debian"
   },
   {
+    "name": "PigeonPod",
+    "slug": "pigeonpod",
+    "desc": "PigeonPod turns YouTube and Bilibili channels and playlists into podcast RSS feeds you can subscribe to in any podcast app. It downloads new episodes as audio or video with yt-dlp, and supports per-feed keyword and duration filters, cookies for restricted content, proxies, and local or S3 storage.",
+    "script": "ct/pigeonpod.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/pigeonpod.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/pigeonpod.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00013"
+    ],
+    "category_names": [
+      "Media & Streaming"
+    ],
+    "notes": [
+      "RSS links are built from the Base URL, set to http://<container-ip>:8080 at install time. If podcast apps reach PigeonPod through a domain or reverse proxy, or the container IP changes, update it in the web UI settings. PIGEON_BASE_URL in /opt/pigeonpod_data/.env is only read while that setting is empty.",
+      "YouTube channels and playlists need a YouTube Data API key, set in the web UI settings. Bilibili works without one.",
+      "The database and downloaded media live in /opt/pigeonpod_data. yt-dlp is a standalone binary kept current by the update script. The in-app yt-dlp updater installs through pip, which this container does not ship."
+    ],
+    "warnings": [
+      "Change the default password after the first login."
+    ],
+    "port": 8080,
+    "website": "https://pigeonpod.cloud/",
+    "documentation": "https://github.com/aizhimou/pigeon-pod/wiki",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/pigeonpod.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "root",
+      "password": "Root@123"
+    },
+    "os": "debian"
+  },
+  {
     "name": "Pi-Hole",
     "slug": "pihole",
     "desc": "Pi-hole is a free, open-source network-level advertisement and Internet tracker blocking application. It runs on a Raspberry Pi or other Linux-based systems and acts as a DNS sinkhole, blocking unwanted traffic before it reaches a user's device. Pi-hole can also function as a DHCP server, providing IP addresses and other network configuration information to devices on a network. The software is highly configurable and supports a wide range of customizations, such as allowing or blocking specific domains, setting up blocklists and whitelists, and customizing the appearance of the web-based interface. The main purpose of Pi-hole is to protect users' privacy and security by blocking unwanted and potentially malicious content, such as ads, trackers, and malware. It is designed to be easy to set up and use, and can be configured through a web-based interface or through a terminal-based command-line interface.",
@@ -17759,6 +18349,46 @@
     "os": "debian"
   },
   {
+    "name": "PriceBuddy",
+    "slug": "pricebuddy",
+    "desc": "PriceBuddy is a self-hosted price tracker. Paste a product URL from almost any store and it checks price and stock on a schedule, keeps the price history, compares the same product across retailers, and notifies you by email, Pushover, Gotify, ntfy, Telegram, Discord or Apprise when a deal moves in your favour.",
+    "script": "ct/pricebuddy.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/pricebuddy.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/pricebuddy.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00023"
+    ],
+    "category_names": [
+      "Finance & Budgeting"
+    ],
+    "notes": [
+      "Stores set to the API (browser) scraper service are rendered by the bundled SeleniumBase Scrapper, a headless Google Chrome on 127.0.0.1:3000 (service seleniumbase-scrapper). The default HTTP scraper does not use it.",
+      "The configuration is cached. After editing /opt/pricebuddy/.env (for example APP_URL and ASSET_URL behind a reverse proxy), run 'php artisan config:cache' in /opt/pricebuddy and restart pricebuddy-worker."
+    ],
+    "warnings": [
+      "The admin password is generated at install and stored as APP_USER_PASSWORD in /opt/pricebuddy/.env. Log in with admin@example.com, then change the email and password under Account settings."
+    ],
+    "port": 80,
+    "website": "https://pricebuddy.jez.me/",
+    "documentation": "https://pricebuddy.jez.me/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/pricebuddy.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "admin@example.com",
+      "password": ""
+    },
+    "os": "debian"
+  },
+  {
     "name": "PrivateBin",
     "slug": "privatebin",
     "desc": "PrivateBin is a minimalist, open-source pastebin where the server has zero knowledge of pasted data. Data is encrypted/decrypted in the browser using 256-bit AES.",
@@ -18108,6 +18738,39 @@
     "is_dev": false,
     "execute_in": [
       "pve"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
+    "name": "ProxCenter",
+    "slug": "proxcenter",
+    "desc": "ProxCenter is a web console for running several Proxmox VE clusters and Proxmox Backup Server instances from one place: inventory and topology, in-browser noVNC/SPICE consoles, backup visibility, migrations from VMware, Hyper-V, Nutanix and XCP-ng, RBAC and SSO. This script installs the open-source Community Edition with its PostgreSQL database.",
+    "script": "ct/proxcenter.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/proxcenter.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/proxcenter.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [],
+    "category_names": [],
+    "notes": [
+      "This is the Community Edition. DRS load balancing, alerts, reports and notifications, MSP mode and high availability are Enterprise features that need ProxCenter's closed-source orchestrator, which this script does not install. A license key alone does not unlock them here.",
+      "NEXTAUTH_URL and APP_URL in /opt/proxcenter_data/.env point at the container IP. If the IP changes, or you put ProxCenter behind a reverse proxy or a domain, update both and run systemctl restart proxcenter."
+    ],
+    "warnings": [
+      "There is no default account. The first visit to port 3000 opens a setup page that creates the administrator, and anyone who reaches that port can use it until then, so create the account right after the install.",
+      "Connect your clusters with a dedicated Proxmox user and API token rather than root@pam. Keep Privilege Separation on and grant only what the features you use need: https://docs.proxcenter.io/getting-started/connect-proxmox#proxmox-permissions. On PBS, grant the ACL to the token itself as well, since PBS tokens inherit nothing from their user."
+    ],
+    "port": 3000,
+    "website": "https://proxcenter.io/",
+    "documentation": "https://docs.proxcenter.io/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxcenter.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
     ],
     "config_path": "",
     "os": "debian"
@@ -20272,7 +20935,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -20310,6 +20973,46 @@
       "pve"
     ],
     "config_path": "",
+    "os": "debian"
+  },
+  {
+    "name": "Silo",
+    "slug": "silo",
+    "desc": "Silo is an S3-compatible object storage server, a community-maintained fork of the open-source MinIO server by PGSTY. It carries on the AGPL release line after upstream MinIO stopped community distribution, with security fixes and the full web console restored. It keeps the MinIO storage format, MINIO_* variables and S3 API, so existing MinIO data and clients keep working.",
+    "script": "ct/silo.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/silo.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/silo.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00011"
+    ],
+    "category_names": [
+      "Files & Downloads"
+    ],
+    "notes": [
+      "Two ports: 9000 serves the S3 API, 9001 the web console. Object data lives in /opt/silo_data - back that up, or better, give the container a dedicated disk and point MINIO_VOLUMES at it.",
+      "Coming from MinIO? Silo reads the same data directory and MINIO_* settings. See https://silo.pgsty.com/compatibility/migration/ before moving an existing deployment."
+    ],
+    "warnings": [
+      "The root password is generated at install and stored as MINIO_ROOT_PASSWORD in /etc/default/silo. Use it to log into the console on port 9001, then create dedicated access keys for your S3 clients."
+    ],
+    "port": 9001,
+    "website": "https://silo.pgsty.com/",
+    "documentation": "https://silo.pgsty.com/docs/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/pgsty-silo.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": false,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "silo-admin",
+      "password": ""
+    },
     "os": "debian"
   },
   {
@@ -21492,6 +22195,43 @@
       "username": "null",
       "password": "null"
     },
+    "os": "debian"
+  },
+  {
+    "name": "Streamystats",
+    "slug": "streamystats",
+    "desc": "Streamystats is a statistics and analytics service for Jellyfin. It tracks playback sessions through the Jellyfin API and shows watch history, per-user, library and client statistics, and watch-time graphs. It supports multiple servers and can import history from Jellystat and the Playback Reporting plugin. Optional AI features add library chat and embedding-based recommendations through OpenAI-compatible, Ollama or Anthropic providers.",
+    "script": "ct/streamystats.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/streamystats.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/streamystats.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00009"
+    ],
+    "category_names": [
+      "Monitoring & Analytics"
+    ],
+    "notes": [
+      "On first visit the setup page asks for your Jellyfin URL and an API key. Create the key in Jellyfin under Dashboard > API Keys. The optional internal URL is used for server-to-server traffic when Jellyfin is reachable on a LAN address.",
+      "There is no separate account: after setup, sign in with your Jellyfin username and password. Jellyfin administrators get the admin views in Streamystats.",
+      "The first sync of a large library can take a while. AI chat and embedding-based recommendations stay off until you configure a provider under Settings > AI."
+    ],
+    "warnings": [
+      "Installs and updates build the Next.js app from source, which peaks at about 2.3 GB of RAM. Keep the container at 3 GB or more, or updates can fail mid-build."
+    ],
+    "port": 3000,
+    "website": "https://github.com/fredrikburmester/streamystats",
+    "documentation": "https://github.com/fredrikburmester/streamystats/blob/main/DOCKERLESS.md",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/streamystats.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
     "os": "debian"
   },
   {
@@ -23164,6 +23904,44 @@
     "os": "debian"
   },
   {
+    "name": "Tvheadend",
+    "slug": "tvheadend",
+    "desc": "Tvheadend is a TV streaming server and Digital Video Recorder for Linux, supporting DVB-S/S2, DVB-C, DVB-T/T2, ATSC, IPTV, SAT>IP and HDHomeRun as input sources, with HTSP and HTTP streaming output.",
+    "script": "ct/tvheadend.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/tvheadend.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/tvheadend.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00013"
+    ],
+    "category_names": [
+      "Media & Streaming"
+    ],
+    "notes": [
+      "The admin account is created by the Debian package itself during install and cannot be changed from within Tvheadend afterwards — only by re-running the install with new var_admin_user/var_admin_pass values.",
+      "IPTV, SAT>IP and HDHomeRun (network) sources work without extra container configuration. A physical DVB/USB tuner requires passing the device through to the container yourself (e.g. bind-mounting /dev/dvb) — this script does not automate hardware passthrough."
+    ],
+    "warnings": [],
+    "port": 9981,
+    "website": "https://tvheadend.org/",
+    "documentation": "https://docs.tvheadend.org",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/tvheadend.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "admin",
+      "password": "auto-generated"
+    },
+    "os": "debian"
+  },
+  {
     "name": "Twenty",
     "slug": "twenty",
     "desc": "Twenty is a modern open-source CRM platform that helps you manage customer relationships, track deals, and organize contacts with a clean and powerful interface.",
@@ -24558,6 +25336,49 @@
     "os": "debian"
   },
   {
+    "name": "Weblate",
+    "slug": "weblate",
+    "desc": "Weblate is a web-based continuous localization system with tight version control integration. Translators work in the browser while Weblate pulls from and pushes to your Git or Mercurial repositories, with quality checks, translation memory, machine translation, glossaries and add-ons across dozens of file formats.",
+    "script": "ct/weblate.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/weblate.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/weblate.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00012"
+    ],
+    "category_names": [
+      "Documents & Notes"
+    ],
+    "notes": [
+      "Settings come from upstream's environment-driven weblate.settings_docker: add WEBLATE_* variables from the Docker documentation to /opt/weblate_data/weblate.env (for example WEBLATE_EMAIL_HOST for outgoing mail, or WEBLATE_SITE_DOMAIN and WEBLATE_ENABLE_HTTPS=1 behind an HTTPS proxy), then run `systemctl restart weblate weblate-celery`. Python-level overrides go in /opt/weblate_data/settings-override.py.",
+      "No mail server is configured, so registration and notification e-mails fail until WEBLATE_EMAIL_HOST is set.",
+      "Management commands need the environment loaded: `set -a; . /opt/weblate_data/weblate.env; set +a; /opt/weblate/.venv/bin/weblate <command>`.",
+      "Celery runs two worker processes (--concurrency=2 in weblate-celery.service). Raise it together with CPU and RAM if Weblate reports long task queues.",
+      "Repositories, uploads and the secret key live in /opt/weblate_data. Back it up together with the PostgreSQL database."
+    ],
+    "warnings": [
+      "The admin password is generated at install and stored as WEBLATE_ADMIN_PASSWORD in /opt/weblate_data/weblate.env. Weblate does not read that value, so change the password from your profile afterwards, or reset it with `weblate createadmin --update`."
+    ],
+    "port": 80,
+    "website": "https://weblate.org/",
+    "documentation": "https://docs.weblate.org/en/latest/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/weblate.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "admin",
+      "password": ""
+    },
+    "os": "debian"
+  },
+  {
     "name": "Webmin System Administration",
     "slug": "webmin",
     "desc": "Webmin provides a graphical user interface (GUI) for tasks such as user account management, package management, file system configuration, network configuration, and more.",
@@ -24799,6 +25620,48 @@
       "pve"
     ],
     "config_path": "",
+    "os": "debian"
+  },
+  {
+    "name": "Windmill",
+    "slug": "windmill",
+    "desc": "Windmill is an open-source developer platform that turns scripts into webhooks, workflows and UIs. Scripts in Python, TypeScript, Bash, SQL and other languages get an auto-generated form and API, can be chained into flows with branches, loops, retries and approval steps, run on schedules or from webhooks and other triggers, and back low-code apps. This script runs the Community Edition binary in standalone mode (server and worker in one process) with PostgreSQL.",
+    "script": "ct/windmill.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/windmill.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/windmill.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00019"
+    ],
+    "category_names": [
+      "Automation & Scheduling"
+    ],
+    "notes": [
+      "Webhook URLs, OAuth redirects and links in emails are built from BASE_URL in /opt/windmill_data/.env, which points at the container IP. Change it when the IP changes or Windmill sits behind a reverse proxy or domain, then run systemctl restart windmill. A Base URL set in the instance settings takes precedence.",
+      "Python (through uv, which downloads the Python version on first use), TypeScript on Bun, Bash, DuckDB and SQL scripts run out of the box. The other languages the editor offers (TypeScript on Deno, Go, PHP, PowerShell, Rust, C#, Java, Ansible and more) need their runtime installed in the container first.",
+      "Server and worker share one process with a single worker, so jobs run one at a time. For parallel jobs, run more Windmill processes with MODE=worker against the same database.",
+      "The windmill database role has no CREATEDB or CREATEROLE privilege, so the Custom instance database option for Data Tables and DuckLake fails with permission denied. Point Data Tables at a PostgreSQL resource instead."
+    ],
+    "warnings": [
+      "Log in with admin@windmill.dev / changeme right after the install. Windmill then asks for a new superadmin account, which replaces the default one. Until you do that, anyone who reaches port 8000 can log in with the default credentials."
+    ],
+    "port": 8000,
+    "website": "https://www.windmill.dev/",
+    "documentation": "https://www.windmill.dev/docs/intro",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/windmill.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "admin@windmill.dev",
+      "password": "changeme"
+    },
     "os": "debian"
   },
   {
@@ -25223,6 +26086,42 @@
       "username": "admin",
       "password": "Generated during install"
     },
+    "os": "debian"
+  },
+  {
+    "name": "Youtarr",
+    "slug": "youtarr",
+    "desc": "Youtarr is a self-hosted YouTube downloader that subscribes to channels and playlists and downloads new videos on a schedule with yt-dlp. Videos are organized per channel with NFO files, posters and embedded MP4 metadata, so they show up cleanly in Plex, Jellyfin, Emby or Kodi. It also mirrors playlists into those servers, syncs watch status back, supports SponsorBlock and age, space or watched-based cleanup, and plays videos in its own web UI.",
+    "script": "ct/youtarr.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/youtarr.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/youtarr.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00013"
+    ],
+    "category_names": [
+      "Media & Streaming"
+    ],
+    "notes": [
+      "Videos are downloaded to /opt/youtarr_data/videos (DATA_PATH in /opt/youtarr_data/.env). To store them on a NAS or share them with Plex, Jellyfin or Emby, bind-mount the media folder there, e.g. pct set <CTID> -mp0 /mnt/media/youtube,mp=/opt/youtarr_data/videos, then restart the container. In an unprivileged container the host folder must be writable by UID 100000.",
+      "Settings live in /opt/youtarr_data/config/config.json (edited through the web UI), database credentials in /opt/youtarr_data/.env. Both survive updates. Running update also refreshes yt-dlp; Youtarr can additionally auto-update it from its settings."
+    ],
+    "warnings": [
+      "There is no default login. On first start Youtarr writes a one-time setup token to /opt/youtarr_data/config/setup-token (also shown in journalctl -u youtarr). Open the web UI, paste the token and create the admin account."
+    ],
+    "port": 3011,
+    "website": "https://youtarr.com/",
+    "documentation": "https://dialmasterorg.github.io/Youtarr/docs/installation/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/youtarr.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
     "os": "debian"
   },
   {
