@@ -3080,7 +3080,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -6675,6 +6675,44 @@
       "pve"
     ],
     "config_path": "",
+    "os": "debian"
+  },
+  {
+    "name": "EspoCRM",
+    "slug": "espocrm",
+    "desc": "EspoCRM is an open-source CRM for managing contacts, accounts, leads, opportunities, cases and email, with a customizable entity manager and a REST API.",
+    "script": "ct/espocrm.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/espocrm.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/espocrm.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00025"
+    ],
+    "category_names": [
+      "Business & ERP"
+    ],
+    "notes": [
+      "The admin login is saved to ~/espocrm.creds inside the container.",
+      "If the IP changes or EspoCRM sits behind a domain or reverse proxy, update the site URL under Administration > Settings."
+    ],
+    "warnings": [],
+    "port": 80,
+    "website": "https://www.espocrm.com/",
+    "documentation": "https://docs.espocrm.com/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/espocrm.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "admin",
+      "password": ""
+    },
     "os": "debian"
   },
   {
@@ -12474,6 +12512,41 @@
     "os": "debian"
   },
   {
+    "name": "Lidify",
+    "slug": "lidify",
+    "desc": "Lidify is a music discovery tool for Lidarr. It reads your existing Lidarr artists and uses Last.fm, Spotify or MusicBrainz to suggest similar artists, which can then be added straight back into Lidarr from the web UI.",
+    "script": "ct/lidify.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/lidify.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/lidify.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00014"
+    ],
+    "category_names": [
+      "*Arr Suite"
+    ],
+    "notes": [
+      "Configure the Lidarr address and API key, and a Last.fm or Spotify API key, under Settings in the web UI on first run."
+    ],
+    "warnings": [
+      "Lidify lets environment variables override config/settings_config.json. A Lidify setting added to /opt/lidify/.env wins over the web UI, and changes made there will appear to revert."
+    ],
+    "port": 5000,
+    "website": "https://github.com/TheWicklowWolf/Lidify",
+    "documentation": "https://github.com/TheWicklowWolf/Lidify#readme",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/lidify.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
     "name": "LimeSurvey",
     "slug": "limesurvey",
     "desc": "LimeSurvey is the simple, quick and anonymous online survey tool that's bursting with juicy insights. Calling students, professionals and enterprises: design a survey and get the best insights, it’s free and as easy as squeezing a lime. Make a free online survey now!",
@@ -12798,8 +12871,8 @@
       "AI / Coding & Dev-Tools"
     ],
     "notes": [
-      "The first start downloads a small default model (about 800 MB). Set LLAMA_ARG_HF_REPO to another GGUF repo, or LLAMA_ARG_MODEL to a local file, then run systemctl restart llama-cpp.",
-      "GPUs run on the Vulkan build, as upstream ships no Linux CUDA or ROCm build. NVIDIA cards need the driver's Vulkan libraries in the container."
+      "The first start downloads gemma-4-E2B-it Q4_0 (about 3.5 GB). Set LLAMA_ARG_HF_REPO to another GGUF repo, or LLAMA_ARG_MODEL to a local file, then run systemctl restart llama-cpp.",
+      "Pick the build with var_backend: Vulkan works on any GPU, or use CUDA, ROCm, SYCL or OpenVINO. NVIDIA on Vulkan needs the driver's Vulkan libraries in the container."
     ],
     "warnings": [
       "The web UI and the API have no authentication unless you set an API key at install time or LLAMA_ARG_API_KEY in /opt/llama-cpp.env."
@@ -13802,7 +13875,9 @@
     "category_names": [
       "Gaming & Leisure"
     ],
-    "notes": [],
+    "notes": [
+      "Reverse proxy auth is available but disabled. To enable it, edit the REVERSE_PROXY_AUTH_* lines in /opt/mealie/mealie.env and run: systemctl restart mealie. Only use it behind a trusted proxy and set REVERSE_PROXY_AUTH_SECRET. Docs: https://docs.mealie.io/documentation/getting-started/installation/backend-config/#reverse-proxy-auth"
+    ],
     "warnings": [],
     "port": 9000,
     "website": "https://mealie.io/",
@@ -15094,7 +15169,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -19813,7 +19888,7 @@
   {
     "name": "Proxmox Datacenter Manager (PDM)",
     "slug": "proxmox-datacenter-manager",
-    "desc": "The Proxmox Datacenter Manager project has been developed with the objective of providing a centralized overview of all your individual nodes and clusters. It also enables basic management like migrations of virtual guests without any cluster network requirements. ",
+    "desc": "The Proxmox Datacenter Manager project has been developed with the objective of providing a centralized overview of all your individual nodes and clusters. It also enables basic management like migrations of virtual guests without any cluster network requirements.",
     "script": "ct/proxmox-datacenter-manager.sh",
     "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/proxmox-datacenter-manager.sh",
     "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/proxmox-datacenter-manager.sh",
@@ -19830,8 +19905,8 @@
     ],
     "warnings": [],
     "port": 8443,
-    "website": "https://pve.proxmox.com/wiki/Proxmox_Datacenter_Manager_Roadmap",
-    "documentation": "https://pve.proxmox.com/wiki/Proxmox_Datacenter_Manager_Roadmap",
+    "website": "https://www.proxmox.com/en/products/proxmox-datacenter-manager/overview",
+    "documentation": "https://pdm.proxmox.com/docs/index.html",
     "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
     "updateable": true,
     "privileged": false,
@@ -23153,7 +23228,7 @@
       "Registration is open and the first account becomes the administrator. Register it right away, then set invite_only = true in /Revolt.toml to restrict sign-ups.",
       "Back up the files encryption key in /Revolt.toml. Without it, all uploaded files are unreadable."
     ],
-    "port": 80,
+    "port": 443,
     "website": "https://stoat.chat",
     "documentation": "https://github.com/stoatchat/self-hosted",
     "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/stoatchat.webp",
@@ -24474,6 +24549,37 @@
     ],
     "config_path": "",
     "os": "alpine"
+  },
+  {
+    "name": "tinyMediaManager",
+    "slug": "tinymediamanager",
+    "desc": "tinyMediaManager is a media library manager for organizing and scraping metadata, artwork, and NFO files for movies and TV shows, ready for Kodi, Plex, Jellyfin and Emby. Browser access is the desktop UI via noVNC.",
+    "script": "ct/tinymediamanager.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/tinymediamanager.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/tinymediamanager.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00013"
+    ],
+    "category_names": [
+      "Media & Streaming"
+    ],
+    "notes": [],
+    "warnings": [],
+    "port": 6080,
+    "website": "https://www.tinymediamanager.org/",
+    "documentation": "https://www.tinymediamanager.org/docs/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/tinymediamanager.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
   },
   {
     "name": "Tolgee",
@@ -27661,6 +27767,42 @@
     "os": "debian"
   },
   {
+    "name": "YTPTube",
+    "slug": "ytptube",
+    "desc": "YTPTube is a self-hosted web interface and download manager for yt-dlp. It queues URLs, playlists, channels and live streams, checks sources on a schedule, and adds reusable presets, notifications, a file browser and a built-in player.",
+    "script": "ct/ytptube.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/ytptube.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/ytptube.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00013"
+    ],
+    "category_names": [
+      "Media & Streaming"
+    ],
+    "notes": [
+      "To keep downloads on a NAS or share them with Plex or Jellyfin, mount that folder at /opt/ytptube_data/downloads (pct set <CTID> -mp0 /host/path,mp=/opt/ytptube_data/downloads). The host folder must be writable by UID 100000.",
+      "To reset a password, stop ytptube and run: cd /opt/ytptube && YTP_CONFIG_PATH=/opt/ytptube_data/config .venv/bin/python -m app.scripts.reset_password --username <name>"
+    ],
+    "warnings": [
+      "There is no default login: the first visitor creates the admin account, so open the web UI right after the install."
+    ],
+    "port": 8081,
+    "website": "https://github.com/arabcoders/ytptube",
+    "documentation": "https://github.com/arabcoders/ytptube/blob/master/FAQ.md",
+    "logo": "https://cdn.jsdelivr.net/gh/arabcoders/ytptube@master/ui/public/images/favicon.png",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
     "name": "Yubal",
     "slug": "yubal",
     "desc": "YouTube Music album downloader with Spotify metadata auto-tagging.",
@@ -28048,8 +28190,9 @@
       "Authentication & Security"
     ],
     "notes": [
-      "Application credentials: `cat /etc/zitadel/INSTALLATION_INFO.txt`",
-      "Change the ExternalDomain value in `/opt/zitadel/config.yaml` to your domain/hostname/IP and run `bash zitadel-rerun.sh`"
+      "Sign in at /ui/console as zitadel-admin@zitadel.localhost with the initial password from ~/zitadel.creds in the container. Zitadel asks for a new password at the first sign-in.",
+      "With Login V2 (default) Zitadel runs at https://<IP>:8080 with a self-signed certificate; accept it in the browser. Login V1 stays on plain http://<IP>:8080.",
+      "Zitadel only answers on the ExternalDomain in /opt/zitadel/config.yaml (the container IP). To use a hostname, change it, run zitadel setup --masterkeyFile /opt/zitadel/.masterkey --config /opt/zitadel/config.yaml and restart zitadel"
     ],
     "warnings": [],
     "port": 8080,
@@ -28066,7 +28209,7 @@
     "config_path": "",
     "default_credentials": {
       "username": "zitadel-admin@zitadel.localhost",
-      "password": "Password1!"
+      "password": "cat ~/zitadel.creds"
     },
     "os": "debian"
   },
