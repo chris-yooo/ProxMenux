@@ -2501,7 +2501,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -3187,7 +3187,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -3440,7 +3440,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -5081,7 +5081,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -6139,7 +6139,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -6425,7 +6425,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -6994,8 +6994,12 @@
     "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/vm/fedora-vm.sh",
     "type": "vm",
     "type_id": "lte524abgx960bd",
-    "categories": [],
-    "category_names": [],
+    "categories": [
+      "scriptcat00002"
+    ],
+    "category_names": [
+      "Operating Systems & Appliances"
+    ],
     "notes": [
       "Cloud-Init is enabled by default. Configure your SSH key and credentials in the Proxmox Cloud-Init tab before starting the VM.",
       "Each Fedora release is supported for about 13 months, so plan on upgrading roughly once a year."
@@ -10099,7 +10103,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -10135,7 +10139,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -11311,6 +11315,47 @@
       "lxc"
     ],
     "config_path": "",
+    "os": "debian"
+  },
+  {
+    "name": "JumpServer",
+    "slug": "jumpserver",
+    "desc": "JumpServer is an open-source PAM (Privileged Access Management) / bastion host that provides unified, audited access to SSH, RDP, VNC, Telnet, Kubernetes and database assets through a single web console, with full session recording and playback.",
+    "script": "ct/jumpserver.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/jumpserver.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/jumpserver.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00006"
+    ],
+    "category_names": [
+      "Authentication & Security"
+    ],
+    "notes": [
+      "The generated admin password is saved to ~/jumpserver.creds inside the container.",
+      "The SSH bastion (character-protocol) endpoint is on port 2222, e.g. ssh -p 2222 <user>@<container-ip> — this is separate from the web console on port 80.",
+      "First start takes several minutes: the core service runs database migrations, downloads a GeoIP database, and installs built-in RDP applets on its own before the web UI becomes reachable."
+    ],
+    "warnings": [
+      "Upstream only ships JumpServer v5 as Docker images, so this script builds KoKo, Lina and Luna from source at the same tag as the core. Installs and updates take a long time and need the default resources."
+    ],
+    "port": 80,
+    "website": "https://www.jumpserver.org/",
+    "documentation": "https://docs.jumpserver.org/",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/jumpserver.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "admin",
+      "password": ""
+    },
     "os": "debian"
   },
   {
@@ -17262,41 +17307,6 @@
     "os": "debian"
   },
   {
-    "name": "OpenViking",
-    "slug": "openviking",
-    "desc": "OpenViking is a self-evolving context database for AI agents that unifies agent memory, knowledge RAG and skills. Run it as a standalone HTTP server and connect any client (Python SDK, CLI, or the bundled Web Studio).",
-    "script": "ct/openviking.sh",
-    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/openviking.sh",
-    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/openviking.sh",
-    "type": "lxc",
-    "type_id": "nm9bra8mzye2scg",
-    "categories": [
-      "scriptcat00020"
-    ],
-    "category_names": [
-      "AI / Coding & Dev-Tools"
-    ],
-    "notes": [
-      "A root API key is generated during install and printed at the end of the setup; it is also stored as server.root_api_key in /opt/openviking_data/ov.conf."
-    ],
-    "warnings": [
-      "Model API keys must be configured in /opt/openviking_data/ov.conf (embedding and VLM sections) before the server can store or retrieve memory. Edit the file and restart the service afterwards."
-    ],
-    "port": 1933,
-    "website": "https://www.openviking.ai/",
-    "documentation": "https://docs.openviking.ai/",
-    "logo": "https://raw.githubusercontent.com/volcengine/OpenViking/main/web-studio/public/icon-512.png",
-    "updateable": true,
-    "privileged": false,
-    "has_arm": false,
-    "is_dev": true,
-    "execute_in": [
-      "lxc"
-    ],
-    "config_path": "",
-    "os": "alpine"
-  },
-  {
     "name": "Open WebUI",
     "slug": "openwebui",
     "desc": "OpenWebUI is a self-hosted, web-based interface that allows you to run AI models entirely offline. It integrates with various LLM runners, such as OpenAI and Ollama, and supports features like markdown and LaTeX rendering, model management, and voice/video calls. It also offers multilingual support and the ability to generate images using APIs like DALL-E or ComfyUI",
@@ -20904,7 +20914,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -23445,7 +23455,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -23481,7 +23491,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -23895,7 +23905,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -26255,7 +26265,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -26384,7 +26394,8 @@
     ],
     "notes": [
       "Data is stored in /opt/victorialogs_data and persists across updates.",
-      "vlutils (vlogscli, vlagent) are installed in /opt/vlutils."
+      "vlutils (vlogscli, vlagent) are installed in /opt/vlutils.",
+      "Syslog ingestion is enabled on TCP/UDP 514 (RFC3164/RFC5424). Point devices such as UniFi Remote Syslog to <IP>:514"
     ],
     "warnings": [
       "VictoriaLogs has no built-in authentication. Use a reverse proxy with authentication for production deployments."
@@ -26396,7 +26407,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -27795,7 +27806,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
