@@ -2135,6 +2135,37 @@
     "os": "debian"
   },
   {
+    "name": "Bark Server",
+    "slug": "bark-server",
+    "desc": "Bark Server is the self-hosted backend for the Bark iOS app. It receives push requests over a simple HTTP API and forwards them to Apple's APNs, so scripts and home-automation flows can send custom notifications to your own iPhone. Device keys are stored locally in an embedded key-value database, so no external database is required.",
+    "script": "ct/bark-server.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/bark-server.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/bark-server.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [],
+    "category_names": [],
+    "notes": [
+      "Verify the server with: curl http://<IP>:8080/ping — it returns {\"code\":200,\"message\":\"pong\"}."
+    ],
+    "warnings": [
+      "Bark Server has no authentication by default, set BARK_SERVER_BASIC_AUTH_USER / BARK_SERVER_BASIC_AUTH_PASSWORD to enable HTTP Basic auth."
+    ],
+    "port": 8080,
+    "website": "https://bark.day.app/",
+    "documentation": "https://bark.day.app/",
+    "logo": "https://bark.day.app/logo.png",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
     "name": "Baserow",
     "slug": "baserow",
     "desc": "Baserow is an open-source no-code database platform for building databases, applications, automations, and AI agents without code.",
@@ -2974,7 +3005,7 @@
     "updateable": false,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "vm"
     ],
@@ -3071,7 +3102,8 @@
       "Docker is installed as a system dependency because Wings uses it to run the actual game server containers; the Panel and Wings processes themselves run natively, not inside Docker."
     ],
     "warnings": [
-      "The encryption key is generated automatically and saved to /etc/calagopus/.env. Back it up, losing it will make existing data unreadable."
+      "The encryption key is generated automatically and saved to /etc/calagopus/.env. Back it up, losing it will make existing data unreadable.",
+      "This install script installs Calagopus as a binary nativly and does not use the heavy docker image. meaning you will not be able to install extensions."
     ],
     "port": 8000,
     "website": "https://calagopus.com",
@@ -6917,6 +6949,40 @@
     "os": "debian"
   },
   {
+    "name": "Factorio",
+    "slug": "factorio",
+    "desc": "Factorio headless multiplayer server using the current stable Linux release.",
+    "script": "ct/factorio.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/factorio.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/factorio.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00024"
+    ],
+    "category_names": [
+      "Gaming & Leisure"
+    ],
+    "notes": [
+      "Connect using the Factorio client to <container IP>:34197. Clients need the same Factorio version and mods as the server.",
+      "Saves are stored in /opt/factorio/saves. The service loads the most recent save on restart."
+    ],
+    "warnings": [],
+    "port": 0,
+    "website": "https://factorio.com/",
+    "documentation": "https://wiki.factorio.com/Multiplayer",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/factorio.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "os": "debian"
+  },
+  {
     "name": "FalkorDB",
     "slug": "falkordb",
     "desc": "FalkorDB is a low-latency property graph database built on sparse matrices (GraphBLAS), aimed at knowledge graphs and GraphRAG. It runs as a Redis module queried with OpenCypher from any Redis client, and FalkorDB Browser adds a web UI for queries and exploring graphs.",
@@ -7942,6 +8008,46 @@
       "pve"
     ],
     "config_path": "",
+    "os": "debian"
+  },
+  {
+    "name": "FreeScout",
+    "slug": "freescout",
+    "desc": "FreeScout is a self-hosted help desk and shared mailbox, an open-source alternative to Zendesk and Help Scout. It turns support email into conversations that agents assign, tag and answer together, with saved replies, internal notes, collision detection and customer history. Modules add features like a knowledge base, satisfaction ratings and workflows.",
+    "script": "ct/freescout.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/freescout.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/freescout.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00025"
+    ],
+    "category_names": [
+      "Business & ERP"
+    ],
+    "notes": [
+      "Sign in with the admin email and the generated password saved in ~/freescout.creds inside the container.",
+      "Mail servers on private IPs are rejected until listed in APP_REMOTE_HOST_WHITE_LIST in /opt/freescout/.env (clear the cache afterwards)."
+    ],
+    "warnings": [
+      "FreeScout only answers on the host in APP_URL (the container IP). For a domain or reverse proxy, change APP_URL in /opt/freescout/.env, then click Clear Cache under Manage > System > Tools."
+    ],
+    "port": 80,
+    "website": "https://freescout.net/",
+    "documentation": "https://github.com/freescout-help-desk/freescout/wiki",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/freescout.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "admin@example.com",
+      "password": ""
+    },
     "os": "debian"
   },
   {
@@ -17067,7 +17173,6 @@
       "Files & Downloads"
     ],
     "notes": [
-      "One script serves both variants: the installer asks for the container OS, or pass var_os=alpine to pick Alpine unattended.",
       "The admin password is generated during the installation and saved to /root/openlist.creds inside the container. Change it with `/opt/openlist/openlist --data /opt/openlist_data admin set <password>`.",
       "Config, database, logs and search index live in /opt/openlist_data, outside the directory an update replaces, so updating never touches them."
     ],
@@ -17089,45 +17194,6 @@
       "password": ""
     },
     "os": "debian"
-  },
-  {
-    "name": "OpenList",
-    "slug": "openlist",
-    "desc": "OpenList is a file list program that mounts many storage backends - S3, WebDAV, OneDrive, Google Drive, SFTP, local disks and more - behind one web UI, and serves them again over WebDAV, FTP and S3. It is the community-driven fork of AList.",
-    "script": "ct/openlist.sh",
-    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/openlist.sh",
-    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/openlist.sh",
-    "type": "lxc",
-    "type_id": "nm9bra8mzye2scg",
-    "categories": [
-      "scriptcat00011"
-    ],
-    "category_names": [
-      "Files & Downloads"
-    ],
-    "notes": [
-      "One script serves both variants: the installer asks for the container OS, or pass var_os=alpine to pick Alpine unattended.",
-      "The admin password is generated during the installation and saved to /root/openlist.creds inside the container. Change it with `/opt/openlist/openlist --data /opt/openlist_data admin set <password>`.",
-      "Config, database, logs and search index live in /opt/openlist_data, outside the directory an update replaces, so updating never touches them."
-    ],
-    "warnings": [],
-    "port": 5244,
-    "website": "https://oplist.org/",
-    "documentation": "https://doc.oplist.org/",
-    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/openlist.webp",
-    "updateable": true,
-    "privileged": false,
-    "has_arm": false,
-    "is_dev": true,
-    "execute_in": [
-      "lxc"
-    ],
-    "config_path": "",
-    "default_credentials": {
-      "username": "admin",
-      "password": ""
-    },
-    "os": "alpine"
   },
   {
     "name": "OpenObserve",
@@ -17980,7 +18046,7 @@
     "notes": [
       "First visit will prompt you to create an account",
       "Tesseract OCR is pre-installed for all languages",
-      "Documents are stored in /opt/papra/app-data/documents",
+      "Documents are stored in /opt/papra_data/documents",
       "Ingestion folder available at /opt/papra_data/ingestion for automatic document import"
     ],
     "warnings": [
@@ -19363,7 +19429,7 @@
   {
     "name": "PowerDNS",
     "slug": "powerdns",
-    "desc": "The PowerDNS Authoritative Server is a versatile nameserver which supports a large number of backends. These backends can either be plain zone files or be more dynamic in nature. PowerDNS has the concepts of ‘backends’. A backend is a datastore that the server will consult that contains DNS records (and some metadata). The backends range from database backends (MySQL, PostgreSQL) and BIND zone files to co-processes and JSON API’s.",
+    "desc": "<p>PowerDNS Authoritative Server with the Poweradmin web interface. The PowerDNS Authoritative Server is a versatile nameserver which supports a large number of backends. These backends can either be plain zone files or be more dynamic in nature. PowerDNS has the concepts of &lsquo;backends&rsquo;. A backend is a datastore that the server will consult that contains DNS records (and some metadata). The backends range from database backends (MySQL, PostgreSQL) and BIND zone files to co-processes and JSON API&rsquo;s.</p>",
     "script": "ct/powerdns.sh",
     "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/powerdns.sh",
     "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/powerdns.sh",
@@ -20678,7 +20744,7 @@
     "updateable": true,
     "privileged": false,
     "has_arm": false,
-    "is_dev": true,
+    "is_dev": false,
     "execute_in": [
       "lxc"
     ],
@@ -23530,6 +23596,45 @@
     "os": "debian"
   },
   {
+    "name": "SUB/WAVE",
+    "slug": "subwave",
+    "desc": "SUB/WAVE turns your own music library into a self-hosted internet radio station. An AI DJ picks the tracks from Navidrome, talks between them with a local or cloud voice and runs shows, jingles and listener requests, while everyone hears the same Icecast stream.",
+    "script": "ct/subwave.sh",
+    "script_url": "https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/subwave.sh",
+    "script_url_mirror": "https://git.community-scripts.org/community-scripts/ProxmoxVE/raw/branch/main/ct/subwave.sh",
+    "type": "lxc",
+    "type_id": "nm9bra8mzye2scg",
+    "categories": [
+      "scriptcat00013"
+    ],
+    "category_names": [
+      "Media & Streaming"
+    ],
+    "notes": [
+      "Open http://<IP>/onboarding and sign in with the admin password from ~/subwave.creds inside the container."
+    ],
+    "warnings": [
+      "SUB/WAVE needs a Navidrome (Subsonic) server with your music and an LLM (Ollama, any OpenAI-compatible server or a cloud API key); the onboarding wizard connects both."
+    ],
+    "port": 80,
+    "website": "https://getsubwave.com/",
+    "documentation": "https://getsubwave.com/manual",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/sub-wave.webp",
+    "updateable": true,
+    "privileged": false,
+    "has_arm": false,
+    "is_dev": true,
+    "execute_in": [
+      "lxc"
+    ],
+    "config_path": "",
+    "default_credentials": {
+      "username": "admin",
+      "password": ""
+    },
+    "os": "debian"
+  },
+  {
     "name": "SuggestArr",
     "slug": "suggestarr",
     "desc": "SuggestArr watches what you actually play on Jellyfin, Plex or Emby, looks up similar titles on TMDB, and automatically files requests for them in Jellyseerr or Overseerr. It turns your viewing history into an automatically growing library without manual searching.",
@@ -25884,7 +25989,7 @@
     ],
     "port": 0,
     "website": "",
-    "documentation": "https://community-scripts.org/docs/tools/update-apps",
+    "documentation": "https://community-scripts.org/docs/tools/pve/update-apps",
     "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/proxmox.webp",
     "updateable": true,
     "privileged": false,
